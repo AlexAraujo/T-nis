@@ -1,0 +1,6 @@
+@TnisSearchApi_HostAddress = http://localhost:5100
+
+GET {{TnisSearchApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

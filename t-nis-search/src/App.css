@@ -39,10 +39,11 @@ select {
 button {
   padding: 5px 10px;
   font-size: 16px;
-  background-color: #4CAF50;
+  background-color: #63f56f;
   color: white;
   border: none;
   cursor: pointer;
+  border-radius: 20px;
 }
 
 .image-grid {
@@ -53,7 +54,8 @@ button {
 }
 
 .image-grid img {
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
   object-fit: cover;
+  border-radius: 20px;
 }
