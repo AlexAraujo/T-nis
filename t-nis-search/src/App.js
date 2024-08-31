@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './App.css';
 
@@ -10,29 +10,43 @@ function App() {
   const [estilo, setEstilo] = useState('todos');
   const [images, setImages] = useState([]);
 
-  useEffect(() => {
-    buscarImagens();
-  }, []);
+  // const buscarImagens = useCallback(async () => {
+  //   try {
+  //     const response = await axios.get(`${API_BASE_URL}/api/Unsplash/search`, {
+  //       params: { descricao: '' }
+  //     });
+  //     console.log('Resposta completa:', response);
+  //     setImages(response.data.data.images || []);
+  //   } catch (error) {
+  //     console.error('Erro ao buscar imagens:', error);
+  //     setImages([]);
+  //   }
+  // }, []);
 
-  const buscarImagens = async () => {
-    try {
-      const response = await axios.get(`${API_BASE_URL}/api/images`);
-      setImages(Array.isArray(response.data.images) ? response.data.images : []);
-    } catch (error) {
-      console.error('Erro ao buscar imagens:', error);
-      setImages([]);
-    }
-  };
+  // useEffect(() => {
+  //   buscarImagens();
+  // }, [buscarImagens]);
 
   const lidarComEnvio = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${API_BASE_URL}/api/Search`, { descricao, cor, estilo }, {
-        headers: {
-          'Content-Type': 'application/json; charset=utf-8'
+      const response = await axios.post(`${API_BASE_URL}/api/Unsplash/search`, 
+        { descricao, cor, estilo }, 
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
-      });
-      setImages(Array.isArray(response.data.images) ? response.data.images : []);
+      );
+      console.log('entrou no envio', response.data);
+
+      if (response.data && response.data && response.data.images) {
+        setImages(response.data.images);
+        console.log('Imagens definidas:', response.data.images);
+      } else {
+        console.error('Formato de resposta inesperado:', response.data);
+        setImages([]);
+      }
     } catch (error) {
       console.error('Erro ao buscar imagens:', error);
       if (error.response) {
@@ -75,13 +89,15 @@ function App() {
             <div key={index} className="image-item">
               <img 
                 src={image.url} 
-                alt={image.description} 
+                alt={image.descricao} 
                 onError={(e) => {
                   console.error('Erro ao carregar imagem:', image.url);
                   e.target.src = 'https://via.placeholder.com/200x200?text=Imagem+não+encontrada';
                 }}
               />
-              <p className="image-description">{image.description}</p>
+              <p className="image-description">-</p>
+              <p className="image-color">Cor: {image.cor}</p>
+              <p className="image-style">Estilo: {image.estilo}</p>
             </div>
           ))
         ) : (

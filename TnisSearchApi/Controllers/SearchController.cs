@@ -1,25 +1,75 @@
 using Microsoft.AspNetCore.Mvc;
-using TnisSearchApi.Interfaces;
-using TnisSearchApi.Models;
+using TnisSearchAPI.Services;
+using TnisSearchAPI.Models;
 
-namespace TnisSearchApi.Controllers
+namespace TnisSearchAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class SearchController : ControllerBase
     {
-        private readonly ISearchService _searchService;
+        private readonly ElasticsearchService _elasticsearchService;
+        private readonly ILogger<SearchController> _logger;
 
-        public SearchController(ISearchService searchService)
+        public SearchController(ElasticsearchService elasticsearchService, ILogger<SearchController> logger)
         {
-            _searchService = searchService;
+            _elasticsearchService = elasticsearchService;
+            _logger = logger;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery] string descricao, [FromQuery] string cor, [FromQuery] string estilo)
+        {
+            var searchResponse = await _elasticsearchService.Search(descricao, cor, estilo);
+
+            var results = searchResponse.Hits.Select(hit => new ImageModel
+            {
+                Url = hit.Source.Url,
+                Descricao = hit.Source.Descricao,
+                Cor = hit.Source.Cor,
+                Estilo = hit.Source.Estilo
+            }).ToList();
+
+            return Ok(new
+            {
+                TotalHits = searchResponse.Total,
+                Images = results,
+                ElapsedMilliseconds = searchResponse.Took,
+                IsValid = searchResponse.IsValid,
+                ServerError = searchResponse.ServerError?.Error,
+                DebugInfo = searchResponse.DebugInformation
+            });
         }
 
         [HttpPost]
-        public ActionResult<SearchResult> Search([FromBody] SearchRequest request)
+        public async Task<IActionResult> Post([FromBody] SearchRequest request)
         {
-            var result = _searchService.Search(request);
-            return Ok(result);
+            var searchResponse = await _elasticsearchService.Search(request.Descricao, request.Cor, request.Estilo);
+
+            var results = searchResponse.Hits.Select(hit => new ImageModel
+            {
+                Url = hit.Source.Url,
+                Descricao = hit.Source.Descricao,
+                Cor = hit.Source.Cor,
+                Estilo = hit.Source.Estilo
+            }).ToList();
+
+            return Ok(new
+            {
+                TotalHits = searchResponse.Total,
+                Images = results,
+                ElapsedMilliseconds = searchResponse.Took,
+                IsValid = searchResponse.IsValid,
+                ServerError = searchResponse.ServerError?.Error,
+                DebugInfo = searchResponse.DebugInformation
+            });
         }
+    }
+
+    public class SearchRequest
+    {
+        public string Descricao { get; set; }
+        public string Cor { get; set; }
+        public string Estilo { get; set; }
     }
 }
