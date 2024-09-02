@@ -1,4 +1,5 @@
 using OpenAI_API;
+using TnisSearchAPI.Services;
 
 public class Startup
 {
@@ -16,6 +17,7 @@ public class Startup
         services.AddSingleton<OpenAIAPI>(sp => 
             new OpenAIAPI(new APIAuthentication(Configuration["OpenAI:ApiKey"])));
         
+        services.AddScoped<ChatGptService>();
         services.AddScoped<UnsplashService>();
         services.AddControllers();
         
@@ -26,6 +28,7 @@ public class Startup
                                   .AllowAnyMethod()
                                   .AllowAnyHeader());
         });
+        
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

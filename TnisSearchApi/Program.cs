@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TnisSearchApi.Interfaces;
 using Nest;
 using TnisSearchAPI.Services;
 using Microsoft.Extensions.Logging;
@@ -40,6 +39,8 @@ builder.Services.AddHttpClient<UnsplashService>(client =>
 {
     client.BaseAddress = new Uri("https://api.unsplash.com/");
 });
+
+builder.Services.AddHttpClient<ChatGptService>();
 
 // Remove these lines:
 // builder.Services.AddHttpClient<ChatGptService>();

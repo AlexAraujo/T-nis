@@ -1,4 +1,4 @@
-public class SearchRequest
+public class SearchRequestModel
 {
     public string Descricao { get; set; }
     public string Cor { get; set; }

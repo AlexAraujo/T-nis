@@ -1,110 +1,31 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import Home from './componentes/Home/Home';
+import TSearch from './componentes/TSearch/TSearch';
+import Sobre from './componentes/Sobre/Sobre';
+import Logout from './componentes/Logout/Logout';
 import './App.css';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://localhost:7029';
-
 function App() {
-  const [descricao, setDescricao] = useState('');
-  const [cor, setCor] = useState('');
-  const [estilo, setEstilo] = useState('todos');
-  const [images, setImages] = useState([]);
-
-  // const buscarImagens = useCallback(async () => {
-  //   try {
-  //     const response = await axios.get(`${API_BASE_URL}/api/Unsplash/search`, {
-  //       params: { descricao: '' }
-  //     });
-  //     console.log('Resposta completa:', response);
-  //     setImages(response.data.data.images || []);
-  //   } catch (error) {
-  //     console.error('Erro ao buscar imagens:', error);
-  //     setImages([]);
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   buscarImagens();
-  // }, [buscarImagens]);
-
-  const lidarComEnvio = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(`${API_BASE_URL}/api/Unsplash/search`, 
-        { descricao, cor, estilo }, 
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-      );
-      console.log('entrou no envio', response.data);
-
-      if (response.data && response.data && response.data.images) {
-        setImages(response.data.images);
-        console.log('Imagens definidas:', response.data.images);
-      } else {
-        console.error('Formato de resposta inesperado:', response.data);
-        setImages([]);
-      }
-    } catch (error) {
-      console.error('Erro ao buscar imagens:', error);
-      if (error.response) {
-        console.error('Resposta do servidor:', error.response.data);
-        console.error('Status do erro:', error.response.status);
-      }
-      setImages([]);
-    }
-  };
-
   return (
-    <div className="App">
-      <h1>T-Nis Search</h1>
-      <form onSubmit={lidarComEnvio}>
-        <div className="inputs-container">
-          <input
-            type="text"
-            value={descricao}
-            onChange={(e) => setDescricao(e.target.value)}
-            placeholder="Descrição"
-          />
-          <input
-            type="text"
-            value={cor}
-            onChange={(e) => setCor(e.target.value)}
-            placeholder="Cor"
-          />
-          <select value={estilo} onChange={(e) => setEstilo(e.target.value)}>
-            <option value="todos">Todos os estilos</option>
-            <option value="casual">Casual</option>
-            <option value="esportivo">Esportivo</option>
-            <option value="social">Social</option>
-          </select>
-        </div>
-        <button type="submit">Buscar</button>
-      </form>
-      <div className="image-grid">
-        {Array.isArray(images) && images.length > 0 ? (
-          images.map((image, index) => (
-            <div key={index} className="image-item">
-              <img 
-                src={image.url} 
-                alt={image.descricao} 
-                onError={(e) => {
-                  console.error('Erro ao carregar imagem:', image.url);
-                  e.target.src = 'https://via.placeholder.com/200x200?text=Imagem+não+encontrada';
-                }}
-              />
-              <p className="image-description">-</p>
-              <p className="image-color">Cor: {image.cor}</p>
-              <p className="image-style">Estilo: {image.estilo}</p>
-            </div>
-          ))
-        ) : (
-          <p>Nenhuma imagem encontrada.</p>
-        )}
+    <Router>
+      <div className="App">
+        <nav>
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/tsearch">T-Search</Link></li>
+            <li><Link to="/sobre">Sobre</Link></li>
+            <li><Link to="/logout">Logout</Link></li>
+          </ul>
+        </nav>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/tsearch" element={<TSearch />} />
+          <Route path="/sobre" element={<Sobre />} />
+          <Route path="/logout" element={<Logout />} />
+        </Routes>
       </div>
-    </div>
+    </Router>
   );
 }
 
