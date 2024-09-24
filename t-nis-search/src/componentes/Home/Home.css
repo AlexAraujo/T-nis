@@ -1,9 +1,30 @@
 /* src/Home/Home.css */
 .Home {
-    text-align: center;
-    color: aliceblue;
-  }
-  .home-page {
-    font-size: 2em;
-    color: aliceblue;
-  }
+  text-align: center;
+  color: #f0f8ff; /* AliceBlue */
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Arial', sans-serif;
+}
+
+.home-page {
+  font-size: 2.5em;
+  color: #f0f8ff; /* AliceBlue */
+  margin: 20px 0;
+  text-align: center; /* Adicionado para centralizar o texto */
+}
+
+.home-page img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.p-home {
+  font-size: 30px;
+}

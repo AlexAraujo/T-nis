@@ -1,52 +1,92 @@
-/* src/Filtros/Filtros.css */
 .inputs-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .color-input {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-  }
+  display: flex;
+  flex-direction: row; /* Altera para linha */
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  flex-wrap: nowrap; /* Garante que os itens não quebrem para a próxima linha */
+}
 
-  .inputs-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
+.color-input {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
 
-    .descricao-input {
-        width: 800px;
-        height: 30px;
-        margin-left: 10px;
-        border-radius: 10px;
-        border: none;
-    }
-  
-  input {
-    padding: 5px;
-    font-size: 16px;
-  }
-  
-  .filter-container {
-    margin-bottom: 10px;
-  }
+.descricao-input {
+  width: 1800px;
+  max-width: 600px;
+  height: 50px;
+  margin-left: 20px;
+  border-radius: 15px;
+  border: 2px solid rebeccapurple;
+  padding: 10px;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
 
-  select {
-    padding: 5px;
-    font-size: 16px;
-  }
-  
-  button {
-    padding: 5px 10px;
-    font-size: 16px;
-    background-color: #63f56f;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 20px;
-  }
+.descricao-input:focus {
+  border-color: #63f56f;
+  box-shadow: 0 0 5px #9400d8(99, 245, 111, 0.5);
+  outline: none;
+}
+
+input {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus {
+  border-color: #63f56f;
+  box-shadow: 0 0 5px rgba(99, 245, 111, 0.5);
+  outline: none;
+}
+
+.filter-container {
+  margin-bottom: 20px;
+}
+
+select {
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+  background-color: #f9f9f9;
+  color: #333;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+}
+
+select:focus {
+  border-color: #9400d8;
+  box-shadow: 0 0 5px rgba(99, 245, 111, 0.5);
+}
+
+select option {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #fff;
+  color: #333;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #63f56f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+  background-color: #52d456;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

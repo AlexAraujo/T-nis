@@ -10,20 +10,24 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <nav>
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/tsearch">T-Search</Link></li>
-            <li><Link to="/sobre">Sobre</Link></li>
-            <li><Link to="/logout">Logout</Link></li>
-          </ul>
-        </nav>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/tsearch" element={<TSearch />} />
-          <Route path="/sobre" element={<Sobre />} />
-          <Route path="/logout" element={<Logout />} />
-        </Routes>
+        <header>
+          <nav>
+            <ul className="nav-list">
+              <li className="nav-item"><Link to="/">Home</Link></li>
+              <li className="nav-item"><Link to="/tsearch">T-Search</Link></li>
+              <li className="nav-item"><Link to="/sobre">Sobre</Link></li>
+              <li className="nav-item"><Link to="/logout">Logout</Link></li>
+            </ul>
+          </nav>
+        </header>
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/tsearch" element={<TSearch />} />
+            <Route path="/sobre" element={<Sobre />} />
+            <Route path="/logout" element={<Logout />} />
+          </Routes>
+        </main>
       </div>
     </Router>
   );

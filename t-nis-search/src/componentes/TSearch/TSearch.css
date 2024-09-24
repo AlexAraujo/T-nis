@@ -14,9 +14,12 @@
     width: 300px;
     height: 300px;
     object-fit: cover;
-    border-radius: 20px;
+    border-radius: 20%;
+    border: 10px solid transparent;
+    background: linear-gradient(to bottom, rgb(255, 249, 254), rgb(255, 28, 217));
+    background-clip: padding-box;
+    padding: 5px;
   }
-  
   .image-item {
     margin: 10px;
     text-align: left;
