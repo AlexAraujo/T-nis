@@ -48,13 +48,13 @@ namespace TnisSearchAPI.Services
         {
             if (string.IsNullOrEmpty(query))
             {
-                query = "sneakers";
+                query = "cat";
             }
 
             try
             {
                 color = await _chatGptService.ConverterHexadecimalEmNomeDaCor(color);
-                var searchQuery = $"{color} {query}".Trim();
+                var searchQuery = $"animal {query}".Trim();
 
                 var allImages = new List<ImageModel>();
 
